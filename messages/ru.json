@@ -5,5 +5,9 @@
   "counter": {
     "increment": "Инкремент",
     "decrement": "Декремент"
+  },
+  "GlobalError": {
+    "title": "Что-то пошло не так",
+    "retry": "Перезагрузить"
   }
 }

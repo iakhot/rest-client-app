@@ -6,6 +6,9 @@ const theme = createTheme({
     fontFamily: 'var(--font-roboto)',
   },
   cssVariables: true,
+  palette: {
+    mode: 'dark',
+  },
 });
 
 export default theme;
