@@ -3,7 +3,8 @@ import './globals.css';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import ClientThemeProvider from '@/components/common/theme-provider';
 import { routing } from '@/i18n/routing';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Create Next App',

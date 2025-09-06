@@ -5,8 +5,15 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import prettier from 'eslint-plugin-prettier';
 import nextPlugin from '@next/eslint-plugin-next';
 import tsParser from '@typescript-eslint/parser';
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
 
-export default [
+const compat = new FlatCompat({
+  baseDirectory: import.meta.dirname,
+  recommendedConfig: js.configs.recommended,
+});
+
+const eslintConfig = [
   {
     ignores: ['node_modules/**', '.next/**', 'dist/**'],
   },
@@ -50,4 +57,9 @@ export default [
       },
     },
   },
+  ...compat.config({
+    extends: ['eslint:recommended', 'next'],
+  }),
 ];
+
+export default eslintConfig;
