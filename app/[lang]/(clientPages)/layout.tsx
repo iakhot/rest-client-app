@@ -1,7 +1,9 @@
+import { ReactNode } from 'react';
+
 function ClientLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <>

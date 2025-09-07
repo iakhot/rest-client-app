@@ -4,7 +4,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import ClientThemeProvider from '@/components/common/theme-provider';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
-import React from 'react';
+import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,7 +15,7 @@ export default async function RootLayout({
   children,
   params,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
