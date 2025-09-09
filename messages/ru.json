@@ -9,5 +9,19 @@
   "GlobalError": {
     "title": "Что-то пошло не так",
     "retry": "Перезагрузить"
+  },
+  "Sign": {
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "email": "Почта",
+    "password": "Пароль",
+    "or": "или",
+    "alreadyHave": "Уже есть аккаунт?",
+    "emailTypeError": "Неправильный email",
+    "passwordLengthError": "Пароль должен содержать не менее 8 символов",
+    "passwordLowercaseError": "Добавьте хотя бы одну строчную букву",
+    "passwordUppercaseError": "Добавьте хотя бы одну заглавную букву",
+    "passwordNumberError": "Добавьте хотя бы одну цифру",
+    "passwordSpecialError": "Добавьте хотя бы один специальный символ"
   }
 }
