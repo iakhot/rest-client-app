@@ -1,6 +1,9 @@
 import { Box, Button, Typography, Container } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 function CentralArea() {
+  const t = useTranslations('Home');
+
   return (
     <Container
       maxWidth="sm"
@@ -19,7 +22,7 @@ function CentralArea() {
           fontWeight: 700,
         }}
       >
-        Добро пожаловать!
+        {t('welcome')}
       </Typography>
 
       <Box
@@ -40,7 +43,7 @@ function CentralArea() {
             width: { xs: '100%', sm: 'auto' },
           }}
         >
-          Вход
+          {t('signIn')}
         </Button>
 
         <Button
@@ -52,7 +55,7 @@ function CentralArea() {
             width: { xs: '100%', sm: 'auto' },
           }}
         >
-          Регистрация
+          {t('signUp')}
         </Button>
       </Box>
     </Container>

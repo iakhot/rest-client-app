@@ -23,5 +23,10 @@
     "passwordUppercaseError": "Добавьте хотя бы одну заглавную букву",
     "passwordNumberError": "Добавьте хотя бы одну цифру",
     "passwordSpecialError": "Добавьте хотя бы один специальный символ"
+  },
+  "Home": {
+    "signIn": "Вход",
+    "signUp": "Регистрация",
+    "welcome": "Добро пожаловать !"
   }
 }

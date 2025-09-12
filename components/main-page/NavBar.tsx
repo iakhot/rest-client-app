@@ -12,28 +12,35 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-
-const pages = [
-  { label: 'Вход', path: '/signin' },
-  { label: 'Регистрация', path: '/signup' },
-];
+import { useTranslations, useLocale } from 'next-intl';
+import { useRouter, usePathname } from '@/i18n/navigation';
 
 function NavBar() {
+  const t = useTranslations('Home');
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const pages = [
+    { label: t('signIn'), path: '/signin' },
+    { label: t('signUp'), path: '/signup' },
+  ];
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  const [lang, setLang] = React.useState<'ru' | 'en'>('en');
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
   const toggleLang = (selectedLang: 'ru' | 'en') => {
-    setLang(selectedLang);
-    // возможно добавление логики переключения языка
+    if (selectedLang === locale) return;
+    router.push(pathname, { locale: selectedLang });
   };
 
   interface ILanguageButton {
@@ -44,10 +51,10 @@ function NavBar() {
   function LanguageButton({ languageToggle, languageName }: ILanguageButton) {
     return (
       <Button
-        variant={lang === languageToggle ? 'contained' : 'text'}
+        variant={locale === languageToggle ? 'contained' : 'text'}
         color="inherit"
         onClick={() => toggleLang(languageToggle)}
-        sx={{ color: lang === languageToggle ? 'white' : 'gray' }}
+        sx={{ color: locale === languageToggle ? 'white' : 'gray' }}
       >
         {languageName}
       </Button>
@@ -126,6 +133,7 @@ function NavBar() {
                   key={label}
                   href={path}
                   style={{ textDecoration: 'none' }}
+                  locale={locale}
                 >
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Typography sx={{ textAlign: 'center' }}>
@@ -168,7 +176,12 @@ function NavBar() {
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 3 }}
           >
             {pages.map(({ label, path }) => (
-              <Link key={label} href={path} style={{ textDecoration: 'none' }}>
+              <Link
+                key={label}
+                href={path}
+                style={{ textDecoration: 'none' }}
+                locale={locale}
+              >
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{

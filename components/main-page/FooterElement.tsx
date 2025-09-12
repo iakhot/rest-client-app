@@ -1,8 +1,7 @@
 import React from 'react';
 import NextLink from 'next/link';
 import { Box, Typography, Link, Container } from '@mui/material';
-import GithubLink from '../common/github-link';
-
+import GetLink from '../common/GetLink';
 function FooterElement() {
   return (
     <Container
@@ -19,14 +18,14 @@ function FooterElement() {
           gap: 2,
         }}
       >
-        <GithubLink
+        <GetLink
           link={'https://github.com/Locust13region'}
           name={'Locust13region'}
         />
 
-        <GithubLink link={'https://github.com/iakhot'} name={'iakhot'} />
+        <GetLink link={'https://github.com/iakhot'} name={'iakhot'} />
 
-        <GithubLink link={'https://github.com/Dedal88'} name={'Dedal88'} />
+        <GetLink link={'https://github.com/Dedal88'} name={'Dedal88'} />
 
         <Typography
           variant="body2"
