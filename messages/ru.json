@@ -17,6 +17,7 @@
     "password": "Пароль",
     "or": "или",
     "alreadyHave": "Уже есть аккаунт?",
+    "noAccount ": "Еще нет аккаунта?",
     "emailTypeError": "Неправильный email",
     "passwordLengthError": "Пароль должен содержать не менее 8 символов",
     "passwordLowercaseError": "Добавьте хотя бы одну строчную букву",

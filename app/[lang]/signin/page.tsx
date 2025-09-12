@@ -1,15 +1,23 @@
 'use client';
 
-import { FormEvent, useEffect } from 'react';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { FormEvent } from 'react';
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+} from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/config';
-import { useRouter } from 'next/navigation';
-import SignForm from '@/components/sign-form/sign-form';
+import { redirect, useRouter } from 'next/navigation';
+import SignForm from '@/components/signForm/SignForm';
+import LayoutLoader from '@/components/common/LayoutLoader';
 
 export default function SignIn() {
+  const [user, loader] = useAuthState(auth);
   const [signInUser, result, loading, signInUserError] =
     useSignInWithEmailAndPassword(auth);
   const router = useRouter();
+
+  if (loader || loading) return LayoutLoader();
+  if (user) redirect('/');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,18 +38,14 @@ export default function SignIn() {
     signInUser(email, password);
   };
 
-  useEffect(() => {
-    if (!loading && result) {
-      console.log('Signed in:', result.user);
-      router.push('/');
-    }
-  }, [loading, result, router]);
+  if (!loading && result) {
+    console.log('Signed in:', result.user);
+    router.push('/');
+  }
 
-  useEffect(() => {
-    if (!loading && signInUserError) {
-      console.log('Signed in:', signInUserError.message);
-    }
-  }, [loading, signInUserError]);
+  if (!loading && signInUserError) {
+    console.log('Signed in:', signInUserError.message);
+  }
 
   return (
     <SignForm formType={'signIn'} required={true} handleSubmit={handleSubmit} />

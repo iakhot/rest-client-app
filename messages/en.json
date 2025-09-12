@@ -17,6 +17,7 @@
     "password": "Password",
     "or": "or",
     "alreadyHave": "Already have an account?",
+    "noAccount ": "Don't have an account?",
     "emailTypeError": "Enter valid email",
     "passwordLengthError": "Must be at least 8 characters",
     "passwordLowercaseError": "Add one lowercase",

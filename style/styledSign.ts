@@ -22,7 +22,7 @@ export const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export const SignContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
+  margin: 'auto',
   minHeight: '100%',
   padding: theme.spacing(2),
   [theme.breakpoints.up('sm')]: {
