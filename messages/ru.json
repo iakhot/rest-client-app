@@ -31,7 +31,11 @@
     "passwordLowercaseError": "Добавьте хотя бы одну строчную букву",
     "passwordUppercaseError": "Добавьте хотя бы одну заглавную букву",
     "passwordNumberError": "Добавьте хотя бы одну цифру",
-    "passwordSpecialError": "Добавьте хотя бы один специальный символ"
+    "passwordSpecialError": "Добавьте хотя бы один специальный символ",
+    "signInSuccess": "Успешный вход",
+    "signUpSuccess": "Успешная регистрация",
+    "signInError": "Ошибка входа: ",
+    "signUpError": "Ошибка регистрации: "
   },
   "Home": {
     "signIn": "Вход",

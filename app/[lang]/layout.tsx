@@ -7,7 +7,8 @@ import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import NavBar from '@/components/main-page/NavBar';
 import FooterElement from '@/components/main-page/FooterElement';
-import { Box } from '@mui/material';
+import { Box, Container } from '@mui/material';
+import MessageProvider from '@/components/common/MessageContextProvider';
 
 export const metadata: Metadata = {
   title: 'Rest API app',
@@ -31,27 +32,29 @@ export default async function RootLayout({
       <body>
         <ClientThemeProvider>
           <NextIntlClientProvider>
-            <Box
-              sx={{
-                paddingTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                minHeight: '100vh',
-              }}
-            >
-              <NavBar />
-              <Box
-                component="main"
+            <MessageProvider>
+              <Container
                 sx={{
-                  flexGrow: 1,
+                  paddingTop: 8,
                   display: 'flex',
                   flexDirection: 'column',
+                  minHeight: '100vh',
                 }}
               >
-                {children}
-              </Box>
-              <FooterElement />
-            </Box>
+                <NavBar />
+                <Box
+                  component="main"
+                  sx={{
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  {children}
+                </Box>
+                <FooterElement />
+              </Container>
+            </MessageProvider>
           </NextIntlClientProvider>
         </ClientThemeProvider>
       </body>

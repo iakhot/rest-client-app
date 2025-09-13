@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import {
   useAuthState,
   useCreateUserWithEmailAndPassword,
@@ -11,6 +11,10 @@ import { useFormSchema, type FormData } from './types';
 import { redirect, useRouter } from 'next/navigation';
 import SignForm from '@/components/signForm/SignForm';
 import LayoutLoader from '@/components/common/LayoutLoader';
+import { MessageContext } from '@/components/common/MessageContextProvider';
+import { FirebaseError } from 'firebase/app';
+import { UserCredential } from 'firebase/auth';
+import { useTranslations } from 'next-intl';
 
 const initialFormState = {
   email: '',
@@ -18,17 +22,16 @@ const initialFormState = {
 };
 
 export default function SignUp() {
-  const [user, loader] = useAuthState(auth);
+  const [user, loadingUser] = useAuthState(auth);
   const [userFormData, setFormData] = useState<FormData>(initialFormState);
   const [showErrors, setShowErrors] = useState(false);
   const formSchema = useFormSchema();
-
-  const [createUser, result, loading, createUserError] =
+  const { addSnackMessage } = useContext(MessageContext);
+  const [createUser, createUserResult, createUserLoading, createUserError] =
     useCreateUserWithEmailAndPassword(auth);
-
   const router = useRouter();
+  const t = useTranslations('Sign');
 
-  if (loader || loading) return LayoutLoader();
   if (user) redirect('/');
 
   const formData = {
@@ -47,7 +50,7 @@ export default function SignUp() {
 
   const reset = () => setFormData(initialFormState);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const errors = validate();
@@ -56,28 +59,45 @@ export default function SignUp() {
       setShowErrors(true);
       return;
     }
-    createUser(userFormData.email, userFormData.password);
+    const res = await createUser(userFormData.email, userFormData.password);
+    if (res) {
+      addSnackMessage({ text: t('signUpSuccess'), messageType: 'success' });
+    }
   };
 
-  if (!loading && result) {
-    console.log('Signed up:', result.user);
-    reset();
-    router.push('/');
-  }
+  const lastErrorRef = useRef<FirebaseError | null>(null);
+  const createdUserRef = useRef<UserCredential | null>(null);
 
-  if (!loading && createUserError) {
-    console.log('Signed up:', createUserError.message);
-  }
+  useEffect(() => {
+    if (createUserResult && createUserResult !== createdUserRef.current) {
+      createdUserRef.current = createUserResult;
+      reset();
+      router.replace('/');
+    }
+
+    if (createUserError && createUserError !== lastErrorRef.current) {
+      lastErrorRef.current = createUserError;
+      addSnackMessage({
+        text: t('signInError') + createUserError.code,
+        messageType: 'error',
+      });
+    }
+  }, [createUserError, addSnackMessage, createUserResult, router, t]);
 
   const errors = showErrors ? validate() : undefined;
 
-  return (
-    <SignForm
-      formType={'signUp'}
-      userFormData={userFormData}
-      setFormData={setFormData}
-      handleSubmit={handleSubmit}
-      errors={errors}
-    />
-  );
+  const content =
+    loadingUser || createUserLoading ? (
+      LayoutLoader()
+    ) : (
+      <SignForm
+        formType={'signUp'}
+        userFormData={userFormData}
+        setFormData={setFormData}
+        handleSubmit={handleSubmit}
+        errors={errors}
+      />
+    );
+
+  return content;
 }

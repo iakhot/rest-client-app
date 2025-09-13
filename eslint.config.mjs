@@ -47,6 +47,7 @@ const eslintConfig = [
       ...js.configs.recommended.rules,
       'prettier/prettier': ['error', { singleQuote: true, semi: true }],
       '@typescript-eslint/explicit-module-boundary-types': 'off',
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',

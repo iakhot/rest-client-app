@@ -1,14 +1,16 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { Card, SignContainer } from '@/style/styledSign';
 import { useTranslations } from 'next-intl';
 import { FC, FormEventHandler, Dispatch, SetStateAction } from 'react';
 import GetLink from '@/components/common/GetLink';
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  FormLabel,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 type SignFormProps = {
   formType: 'signUp' | 'signIn';
