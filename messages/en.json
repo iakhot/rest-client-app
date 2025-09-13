@@ -10,6 +10,14 @@
     "title": "Something went wrong",
     "retry": "Try again"
   },
+  "RequestEditor": {
+    "send": "Send",
+    "urlPlaceholder": "Enter URL",
+    "codeSnippets": "Code snippets",
+    "query": "Query",
+    "headers": "Headers",
+    "body": "Body"
+  },
   "Sign": {
     "signIn": "Sign In",
     "signUp": "Sign Up",

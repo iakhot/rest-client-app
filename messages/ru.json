@@ -10,6 +10,14 @@
     "title": "Что-то пошло не так",
     "retry": "Перезагрузить"
   },
+  "RequestEditor": {
+    "send": "Выполнить",
+    "urlPlaceholder": "Введите URL",
+    "codeSnippets": "Фрагмент кода",
+    "query": "Параметры",
+    "headers": "Заголовки",
+    "body": "Тело запроса"
+  },
   "Sign": {
     "signIn": "Войти",
     "signUp": "Регистрация",
