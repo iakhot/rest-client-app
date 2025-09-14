@@ -5,8 +5,8 @@ import { RestResponse } from '@/types/restClient';
 const wrapServerError = (error: unknown) => {
   return {
     error: {
-      name: error?.name,
-      message: error?.message,
+      name: (error as Error)?.name,
+      message: (error as Error)?.message,
     },
   };
 };

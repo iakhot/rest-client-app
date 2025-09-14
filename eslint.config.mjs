@@ -57,12 +57,6 @@ const eslintConfig = [
       '@next/next/no-html-link-for-pages': ['warn', './app'],
       '@next/next/no-head-import-in-document': 'warn',
       '@next/next/next-script-for-ga': 'warn',
-      'no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-        },
-      ],
     },
     settings: {
       react: {

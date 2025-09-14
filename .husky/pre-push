@@ -1,0 +1,2 @@
+echo "Husky is running tests"
+npm run test
