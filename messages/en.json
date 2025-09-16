@@ -40,6 +40,11 @@
   "Home": {
     "signIn": "Sign In",
     "signUp": "Sign Up",
-    "welcome": "Welcome !"
+    "welcome": "Welcome !",
+    "welcomeBack": "Welcome Back, ",
+    "restClient": "REST Client",
+    "history": "History",
+    "variables": "Variables",
+    "signOut": "Sign Out"
   }
 }

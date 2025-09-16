@@ -1,25 +1,37 @@
 'use client';
 
-import * as React from 'react';
+import React from 'react';
 import Link from 'next/link';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
+import {
+  Container,
+  Button,
+  MenuItem,
+  Menu,
+  Typography,
+  IconButton,
+  Toolbar,
+  Box,
+  AppBar,
+} from '@mui/material';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
+import { auth } from '@/firebase/config';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 
 function NavBar() {
   const t = useTranslations('Home');
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+
+  const [user] = useAuthState(auth);
+  const [signOut] = useSignOut(auth);
+
+  const handleSignOut = () => {
+    signOut();
+    handleCloseNavMenu();
+  };
 
   const pages = [
     { label: t('signIn'), path: '/signin' },
@@ -42,7 +54,6 @@ function NavBar() {
     if (selectedLang === locale) return;
     router.push(pathname, { locale: selectedLang });
   };
-
   interface ILanguageButton {
     languageToggle: 'ru' | 'en';
     languageName: 'RU' | 'EN';
@@ -128,20 +139,28 @@ function NavBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map(({ label, path }) => (
-                <Link
-                  key={label}
-                  href={path}
-                  style={{ textDecoration: 'none' }}
-                  locale={locale}
-                >
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>
-                      {label}
-                    </Typography>
-                  </MenuItem>
-                </Link>
-              ))}
+              {!user ? (
+                pages.map(({ label, path }) => (
+                  <Link
+                    key={label}
+                    href={path}
+                    style={{ textDecoration: 'none' }}
+                    locale={locale}
+                  >
+                    <MenuItem onClick={handleCloseNavMenu}>
+                      <Typography sx={{ textAlign: 'center' }}>
+                        {label}
+                      </Typography>
+                    </MenuItem>
+                  </Link>
+                ))
+              ) : (
+                <MenuItem onClick={handleSignOut}>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {t('signOut')}
+                  </Typography>
+                </MenuItem>
+              )}
             </Menu>
           </Box>
 
@@ -175,26 +194,40 @@ function NavBar() {
           <Box
             sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 3 }}
           >
-            {pages.map(({ label, path }) => (
-              <Link
-                key={label}
-                href={path}
-                style={{ textDecoration: 'none' }}
-                locale={locale}
-              >
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    color: 'white',
-                    display: 'block',
-                    textTransform: 'none',
-                  }}
+            {!user ? (
+              pages.map(({ label, path }) => (
+                <Link
+                  key={label}
+                  href={path}
+                  style={{ textDecoration: 'none' }}
+                  locale={locale}
                 >
-                  {label}
-                </Button>
-              </Link>
-            ))}
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2,
+                      color: 'white',
+                      display: 'block',
+                      textTransform: 'none',
+                    }}
+                  >
+                    {label}
+                  </Button>
+                </Link>
+              ))
+            ) : (
+              <Button
+                onClick={handleSignOut}
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  textTransform: 'none',
+                }}
+              >
+                {t('signOut')}
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </Container>

@@ -22,7 +22,7 @@ export default function SignIn() {
   const router = useRouter();
   const t = useTranslations('Sign');
 
-  if (user) redirect('/');
+  if (user) redirect('/main');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ export default function SignIn() {
   useEffect(() => {
     if (signInUserResult && signInUserResult !== signInUserRef.current) {
       signInUserRef.current = signInUserResult;
-      router.replace('/');
+      router.replace('/main');
     }
 
     if (signInUserError && signInUserError !== lastErrorRef.current) {

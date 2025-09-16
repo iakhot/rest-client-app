@@ -40,6 +40,11 @@
   "Home": {
     "signIn": "Вход",
     "signUp": "Регистрация",
-    "welcome": "Добро пожаловать !"
+    "welcome": "Добро пожаловать !",
+    "welcomeBack": "С возвращением, ",
+    "restClient": "REST-клиент",
+    "history": "История",
+    "variables": "Переменные",
+    "signOut": "Выход"
   }
 }
