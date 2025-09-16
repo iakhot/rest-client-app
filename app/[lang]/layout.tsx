@@ -48,6 +48,15 @@ export default async function RootLayout({
                     flexGrow: 1,
                     display: 'flex',
                     flexDirection: 'column',
+                    '&::before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      zIndex: -1,
+                      inset: 0,
+                      backgroundImage:
+                        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+                    },
                   }}
                 >
                   {children}

@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import * as EnMessages from '@/messages/en.json';
 import * as RuMessages from '@/messages/ru.json';
 import { afterEach } from 'vitest';
+import MessageProvider from '@/components/common/MessageContextProvider';
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   locale?: string;
@@ -17,7 +18,7 @@ function createWrapper({ locale }: { locale?: string }) {
       locale={locale}
       messages={locale === 'en' ? EnMessages : RuMessages}
     >
-      {children}
+      <MessageProvider>{children}</MessageProvider>
     </NextIntlClientProvider>
   );
   return ParametrizedWrapper;
