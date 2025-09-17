@@ -14,15 +14,15 @@ function TabPanel(props: PropsWithChildren<TabPanelProps> & RestProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
-    </div>
+      {value === index && <Box p={2}>{children}</Box>}
+    </Box>
   );
 }
 

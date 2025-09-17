@@ -14,9 +14,10 @@
     "send": "Send",
     "urlPlaceholder": "Enter URL",
     "codeSnippets": "Code snippets",
-    "query": "Query",
-    "headers": "Headers",
-    "body": "Body"
+    "headers": "HTTP Headers",
+    "body": "Body",
+    "sendSuccess": "Request completed successfully",
+    "sendError": "Error sending request: "
   },
   "Sign": {
     "signIn": "Sign In",

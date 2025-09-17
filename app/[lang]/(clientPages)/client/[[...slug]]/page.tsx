@@ -1,7 +1,9 @@
 'use client';
 import sendRequest from '@/app/actions';
+import { MessageContext } from '@/components/common/MessageContextProvider';
 import { RestRequest, RestResponse } from '@/types/restClient';
-import { lazy, Suspense, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { lazy, Suspense, useContext, useState } from 'react';
 
 const RequestEditor = lazy(
   () => import('@/components/rest-client/RequestEditor')
@@ -9,6 +11,8 @@ const RequestEditor = lazy(
 
 function RestClient() {
   const [textResponse, setTextResponse] = useState<RestResponse | Error>({});
+  const { addSnackMessage } = useContext(MessageContext);
+  const t = useTranslations('RequestEditor');
 
   const handleSend = async (request: RestRequest) => {
     const { url, method, body } = request;
@@ -16,11 +20,17 @@ function RestClient() {
     const result = await sendRequest(url, method, body);
     if ((result as { error: Error }).error) {
       setTextResponse({});
-      console.log(
-        `Error sending request: ${JSON.stringify((result as { error: Error }).error)}`
-      );
+      addSnackMessage({
+        text:
+          t('sendError') + JSON.stringify((result as { error: Error }).error),
+        messageType: 'error',
+      });
     } else {
       setTextResponse(result as RestResponse);
+      addSnackMessage({
+        text: t('sendSuccess'),
+        messageType: 'success',
+      });
     }
   };
 
@@ -30,7 +40,6 @@ function RestClient() {
         <RequestEditor onSend={handleSend} />
       </Suspense>
 
-      <hr />
       <br />
       <p>{(textResponse as RestResponse).body}</p>
     </div>

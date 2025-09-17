@@ -11,7 +11,7 @@ export interface RestRequest {
   url: string;
   method: HttpMethods;
   body?: string;
-  headers?: { [key: string]: string };
+  headers?: Record<string, string>;
   size?: number;
 }
 
@@ -22,3 +22,12 @@ export interface RestResponse {
   size?: string;
   duration?: string;
 }
+
+export interface KeyValueProps {
+  uuid: string;
+  key: string;
+  value: string;
+  selected?: boolean;
+}
+
+export type KeyValuePair = Pick<KeyValueProps, 'key' | 'value'>;

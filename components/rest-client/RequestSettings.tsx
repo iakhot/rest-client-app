@@ -1,57 +1,65 @@
 import { Tab, Tabs, TextField } from '@mui/material';
 import TabPanel from '../common/TabPanel';
-import { ChangeEvent, memo, SyntheticEvent } from 'react';
+import { memo, SyntheticEvent, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { a11yTabProps } from '@/service/tabsUtils';
+import { useClientStore } from '@/store/clientStore';
+import KeyValueEditor from './KeyValueEditor';
 
-function a11yProps(index: number) {
-  return {
-    id: `tab-${index}`,
-    'aria-controls': `tabpanel-${index}`,
-  };
-}
 interface RequestSettingsProps {
-  currentTab: number;
-  body?: string;
-  onTabChange: (_event: SyntheticEvent, _newValue: number) => void;
-  onBodyChange: (_event: ChangeEvent<HTMLInputElement>) => void;
+  initialBody?: string;
+  onBodyChange: (_value: string) => void;
 }
 
 const RequestSettings = memo(function RequestSettings({
-  currentTab,
-  body,
-  onTabChange,
+  initialBody,
   onBodyChange,
 }: RequestSettingsProps) {
   const t = useTranslations('RequestEditor');
+  const setStoreTab = useClientStore((state) => state.setTab);
+  const storeTab = useClientStore((state) => state.currentTab);
+  const [currentTab, setCurrentTab] = useState(storeTab);
+  const [body, setBody] = useState(initialBody);
+
+  const handleTabChange = (event: SyntheticEvent, value: number) => {
+    event.preventDefault();
+    setStoreTab(value);
+    setCurrentTab(value);
+  };
+
+  const TabPanelSx = {
+    height: '255px',
+    overflowY: 'auto',
+  };
 
   return (
     <>
       <Tabs
         value={currentTab}
-        onChange={onTabChange}
+        onChange={handleTabChange}
         aria-label="request params tabs"
+        sx={{ borderBottom: 1, borderColor: 'divider' }}
       >
-        <Tab label={t('query')} {...a11yProps(0)}></Tab>
-        <Tab label={t('headers')} {...a11yProps(1)}></Tab>
-        <Tab label={t('body')} {...a11yProps(2)}></Tab>
-        <Tab label={t('codeSnippets')} {...a11yProps(3)}></Tab>
+        <Tab label={t('headers')} {...a11yTabProps(0)}></Tab>
+        <Tab label={t('body')} {...a11yTabProps(1)}></Tab>
+        <Tab label={t('codeSnippets')} {...a11yTabProps(2)}></Tab>
       </Tabs>
-      <TabPanel value={currentTab} index={0}>
-        Query Component
+      <TabPanel value={currentTab} index={0} sx={TabPanelSx}>
+        <KeyValueEditor />
       </TabPanel>
-      <TabPanel value={currentTab} index={1}>
-        Headers Component
-      </TabPanel>
-      <TabPanel value={currentTab} index={2}>
+      <TabPanel value={currentTab} index={1} sx={TabPanelSx}>
         <p>Body Component</p>
         <TextField
           id="body"
           value={body ?? ''}
-          onChange={onBodyChange}
+          onChange={(e) => setBody(e.target.value)}
+          onBlur={() => {
+            onBodyChange(body ?? '');
+          }}
         ></TextField>
       </TabPanel>
-      <TabPanel value={currentTab} index={3}>
-        Code Component
+      <TabPanel value={currentTab} index={2} sx={TabPanelSx}>
+        <p>Code Component</p>
       </TabPanel>
     </>
   );
