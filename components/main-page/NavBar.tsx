@@ -145,7 +145,6 @@ function NavBar() {
                     key={label}
                     href={path}
                     style={{ textDecoration: 'none' }}
-                    locale={locale}
                   >
                     <MenuItem onClick={handleCloseNavMenu}>
                       <Typography sx={{ textAlign: 'center' }}>
@@ -200,7 +199,6 @@ function NavBar() {
                   key={label}
                   href={path}
                   style={{ textDecoration: 'none' }}
-                  locale={locale}
                 >
                   <Button
                     onClick={handleCloseNavMenu}

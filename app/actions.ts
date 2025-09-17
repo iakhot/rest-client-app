@@ -23,6 +23,7 @@ export default async function sendRequest(
       method !== 'GET' && body
         ? Buffer.from(body, 'base64').toString('utf8')
         : undefined;
+
     return fetch(url, {
       referrer: '',
       method: method,
