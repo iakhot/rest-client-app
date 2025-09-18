@@ -1,35 +1,35 @@
 'use server';
 
-import { RestResponse } from '@/types/restClient';
+import { RestRequest, RestResponse } from '@/types/restClient';
+import { saveRequest } from './dbActions';
+import { wrapServerError } from '@/service/errorUtils';
 
-const wrapServerError = (error: unknown) => {
-  return {
-    error: {
-      name: (error as Error)?.name,
-      message: (error as Error)?.message,
-    },
-  };
+const getSummarySize = (body?: string, headers?: Headers) => {
+  const bodySize = Buffer.byteLength(body ?? '');
+  const headersSize = headers ? Buffer.byteLength(JSON.stringify(headers)) : 0;
+  return (bodySize + headersSize).toFixed(2);
 };
 
 export default async function sendRequest(
-  url: string,
-  method = 'GET',
-  body?: string,
-  headers?: Record<string, string>
+  request: RestRequest,
+  userId?: string
 ) {
   try {
+    const { url, method, headers, body } = request;
+    const timestamp = Date.now();
     const start = performance.now();
 
     const stringBody =
       method !== 'GET' && body
         ? Buffer.from(body, 'base64').toString('utf8')
         : undefined;
+    const reqHeaders = new Headers(headers);
 
     return fetch(url, {
       referrer: '',
       method: method,
       body: stringBody,
-      headers: new Headers(headers),
+      headers: reqHeaders,
     })
       .then(async (res) => {
         const end = performance.now();
@@ -41,9 +41,7 @@ export default async function sendRequest(
         const status = res.status;
         const statusText = res.statusText;
         const body = await res.text();
-        const size = Number.parseFloat(
-          res.headers.get('Content-Length') ?? ''
-        ).toFixed(2);
+        const size = getSummarySize(body, res.headers);
 
         const result: RestResponse = {
           body,
@@ -53,9 +51,14 @@ export default async function sendRequest(
           statusText,
         };
 
-        return result;
+        request.size = getSummarySize(stringBody, reqHeaders);
+        saveRequest(
+          { ...request, body: stringBody, timestamp: timestamp },
+          result,
+          userId
+        ).catch((error) => console.log(`DB error: ${error}`));
 
-        //TODO: save stats to BD
+        return result;
       })
       .catch((error) => {
         return wrapServerError(error);

@@ -23,10 +23,10 @@ const KeyValueRow = memo(function KeyValueEditor({
       }}
     >
       <TextField
-        key={`${key}-key`}
+        key={`key-${uuid}`}
         type="text"
         variant="standard"
-        id="keyInput"
+        id={`keyInput-${uuid}`}
         placeholder="header"
         value={rowKey}
         onChange={(e) => setRowKey(e.target.value.trim())}
@@ -34,10 +34,10 @@ const KeyValueRow = memo(function KeyValueEditor({
         sx={{ width: '40%', p: 1 }}
       />
       <TextField
-        key={`${key}-value`}
+        key={`value-${value}`}
         type="text"
         variant="standard"
-        id="valueInput"
+        id={`valueInput-${uuid}`}
         placeholder="value"
         value={rowValue}
         onChange={(e) => setRowValue(e.target.value.trim())}

@@ -12,7 +12,8 @@ export interface RestRequest {
   method: HttpMethods;
   body?: string;
   headers?: Record<string, string>;
-  size?: number;
+  size?: string;
+  timestamp?: number;
 }
 
 export interface RestResponse {

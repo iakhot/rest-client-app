@@ -7,12 +7,7 @@ import {
   RestRequest,
 } from '@/types/restClient';
 import { Box, Button, Toolbar } from '@mui/material';
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useState, FocusEvent, useCallback } from 'react';
 import RequestSettings from './RequestSettings';
 import {
@@ -23,8 +18,6 @@ import {
 import { useTranslations } from 'next-intl';
 import { useClientStore } from '@/store/clientStore';
 
-const CLIENT_PAGE = '/client';
-
 function RequestEditor({
   onSend,
 }: {
@@ -32,7 +25,6 @@ function RequestEditor({
 }) {
   const { slug } = useParams();
   const router = useRouter();
-  const path = usePathname();
   const query = useSearchParams();
   const t = useTranslations('RequestEditor');
 
@@ -58,7 +50,7 @@ function RequestEditor({
     const newSlug = event.target.value;
     setRequest({ ...request, method: newSlug as HttpMethods });
     router.replace(
-      composeUrl(CLIENT_PAGE, path, {
+      composeUrl({
         ...request,
         method: newSlug as HttpMethods,
       })
@@ -72,7 +64,6 @@ function RequestEditor({
 
   const handleBodyChange = useCallback(
     (body: string) => {
-      console.log(JSON.stringify(body));
       setRequest({ ...request, body: body });
     },
     [request]
@@ -84,7 +75,7 @@ function RequestEditor({
       body: request.body ? btoa(request.body) : undefined,
     };
     onSend(payload);
-    router.replace(composeUrl(CLIENT_PAGE, path, request));
+    router.replace(composeUrl(request));
   };
 
   return (

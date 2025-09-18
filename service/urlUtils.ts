@@ -1,27 +1,19 @@
 import { KeyValuePair, RestRequest } from '@/types/restClient';
 import { ReadonlyURLSearchParams } from 'next/navigation';
 
-export const composeUrl = (
-  pageSlug: string,
-  path: string,
-  req: RestRequest
-) => {
-  const index = path.indexOf(pageSlug);
-  let newPath = path;
+const CLIENT_PAGE = '/client';
+
+export const composeUrl = (req: RestRequest) => {
+  const initPath = CLIENT_PAGE + '/';
   const encodedUrl = req.url ? btoa(req.url) : undefined;
   const encodedBody = req.body ? btoa(req.body) : undefined;
   const headers = req.headers ? headersToString(req.headers) : undefined;
   const vars = [req.method, encodedUrl, encodedBody, headers];
 
-  if (index !== -1) {
-    const initPath = path.slice(0, index + pageSlug.length) + '/';
-    newPath = initPath;
-    for (const param of vars) {
-      if (!param) break;
-      newPath = newPath.concat(`${param}/`);
-    }
-  }
-  return newPath.slice(0, -1);
+  const newPath = vars.reduce((acc, param) => {
+    return param ? acc?.concat(`${param}/`) : acc;
+  }, initPath);
+  return newPath?.slice(0, -1) ?? initPath;
 };
 
 export const headersToString = (headers: Record<string, string>): string => {
