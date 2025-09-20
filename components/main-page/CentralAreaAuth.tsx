@@ -14,7 +14,6 @@ function CentralAreaAuth({ email }: ICentralAreaAuth) {
       sx={{
         mt: { xs: 4, sm: 8 },
         textAlign: 'center',
-        px: 2,
       }}
     >
       <Typography
@@ -27,7 +26,8 @@ function CentralAreaAuth({ email }: ICentralAreaAuth) {
         }}
       >
         {t('welcomeBack')}
-        {email} !
+        {email}
+        {'\u00A0'}!
       </Typography>
     </Container>
   );

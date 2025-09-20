@@ -1,22 +1,22 @@
 import React from 'react';
 import NextLink from 'next/link';
-import { Box, Typography, Link, Container } from '@mui/material';
+import { Box, Typography, Link, Stack } from '@mui/material';
 import GetLink from '../common/GetLink';
 function FooterElement() {
   return (
-    <Container
+    <Stack
       component="footer"
       maxWidth="lg"
-      sx={{ py: 3, textAlign: 'center' }}
+      pt={2}
+      direction={{ sm: 'column', md: 'row' }}
+      justifyContent={'center'}
+      gap={{ sm: 1, md: 3 }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' },
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 2,
-        }}
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        justifyContent={'center'}
+        alignItems={'center'}
+        gap={1}
       >
         <GetLink
           link={'https://github.com/Locust13region'}
@@ -35,12 +35,14 @@ function FooterElement() {
           name={'Dedal88'}
           newTab={true}
         />
-
-        <Typography
-          variant="body2"
-          color="text.primary"
-          sx={{ mt: { xs: 1, sm: 0 } }}
-        >
+      </Stack>
+      <Stack
+        direction={'row'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        gap={1}
+      >
+        <Typography variant="body2" color="text.primary">
           © 2025
         </Typography>
 
@@ -50,7 +52,6 @@ function FooterElement() {
           target="_blank"
           rel="noopener noreferrer"
           sx={{
-            display: 'inline-block',
             mt: { xs: 1, sm: 0 },
             '& img': {
               width: { xs: 45, sm: 65 },
@@ -60,8 +61,8 @@ function FooterElement() {
         >
           <Box component="img" src="/logo-rs.svg" alt="Logo RS School" />
         </Link>
-      </Box>
-    </Container>
+      </Stack>
+    </Stack>
   );
 }
 

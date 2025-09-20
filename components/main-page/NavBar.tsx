@@ -73,88 +73,165 @@ function NavBar() {
   }
 
   return (
-    <AppBar
-      component="header"
-      position="fixed"
-      sx={{
-        backgroundColor: '#3b3e41ff',
-        top: 0,
-        width: '100%',
-        zIndex: (theme) => theme.zIndex.appBar,
-      }}
-    >
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Link href="/" style={{ display: 'inline-flex' }}>
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                position: 'relative',
-                width: 65,
-                height: 65,
-                m: 1,
-                cursor: 'pointer',
-              }}
-            >
+    <>
+      <AppBar
+        component="header"
+        sx={{
+          position: 'fixed',
+          top: 0,
+          width: '100%',
+          backgroundColor: '#3b3e41ff',
+          zIndex: (theme) => theme.zIndex.appBar,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Toolbar disableGutters>
+            <Link href="/" style={{ display: 'inline-flex' }}>
               <Box
                 sx={{
-                  position: 'absolute',
-                  inset: 0,
-                  bgcolor: 'white',
-                  borderRadius: 4,
-                }}
-              />
-              <Box
-                component="img"
-                src="/logo.png"
-                alt="Logo"
-                sx={{
+                  display: { xs: 'none', md: 'flex' },
                   position: 'relative',
                   width: 65,
                   height: 65,
+                  m: 1,
+                  cursor: 'pointer',
                 }}
-              />
-            </Box>
-          </Link>
+              >
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    bgcolor: 'white',
+                    borderRadius: 4,
+                  }}
+                />
+                <Box
+                  component="img"
+                  src="/logo.png"
+                  alt="Logo"
+                  sx={{
+                    position: 'relative',
+                    width: 65,
+                    height: 65,
+                  }}
+                />
+              </Box>
+            </Link>
 
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              alignItems: 'center',
-              mr: 3,
-              gap: 1,
-            }}
-          >
-            <LanguageButton languageToggle={'ru'} languageName={'RU'} />
-            <LanguageButton languageToggle={'en'} languageName={'EN'} />
-          </Box>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="menu"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+                mr: 3,
+                gap: 1,
+              }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+              <LanguageButton languageToggle={'ru'} languageName={'RU'} />
+              <LanguageButton languageToggle={'en'} languageName={'EN'} />
+            </Box>
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{ display: { xs: 'block', md: 'none' } }}
+              >
+                {!user ? (
+                  pages.map(({ label, path }) => (
+                    <Link
+                      key={label}
+                      href={path}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography sx={{ textAlign: 'center' }}>
+                          {label}
+                        </Typography>
+                      </MenuItem>
+                    </Link>
+                  ))
+                ) : (
+                  <MenuItem onClick={handleSignOut}>
+                    <Typography sx={{ textAlign: 'center' }}>
+                      {t('signOut')}
+                    </Typography>
+                  </MenuItem>
+                )}
+              </Menu>
+            </Box>
+
+            <Link href="/" style={{ display: 'inline-flex' }}>
+              <Box
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                  position: 'relative',
+                  width: 65,
+                  height: 65,
+                  m: 1,
+                  cursor: 'pointer',
+                }}
+              >
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    inset: 0,
+                    bgcolor: 'white',
+                    borderRadius: 4,
+                  }}
+                />
+                <Box
+                  component="img"
+                  src="/logo.png"
+                  alt="Logo"
+                  sx={{
+                    position: 'relative',
+                    width: 65,
+                    height: 65,
+                  }}
+                />
+              </Box>
+            </Link>
+
+            <Box
+              sx={{
+                display: { xs: 'flex', md: 'none' },
+                alignItems: 'center',
+                gap: 1,
+                mr: 2,
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+            >
+              <LanguageButton languageToggle={'ru'} languageName={'RU'} />
+              <LanguageButton languageToggle={'en'} languageName={'EN'} />
+            </Box>
+
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', md: 'flex' },
+                gap: 3,
+                justifyContent: 'flex-end',
               }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {!user ? (
                 pages.map(({ label, path }) => (
@@ -163,113 +240,39 @@ function NavBar() {
                     href={path}
                     style={{ textDecoration: 'none' }}
                   >
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography sx={{ textAlign: 'center' }}>
-                        {label}
-                      </Typography>
-                    </MenuItem>
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{
+                        my: 2,
+                        color: 'white',
+                        display: 'block',
+                        textTransform: 'none',
+                      }}
+                    >
+                      {label}
+                    </Button>
                   </Link>
                 ))
               ) : (
-                <MenuItem onClick={handleSignOut}>
-                  <Typography sx={{ textAlign: 'center' }}>
-                    {t('signOut')}
-                  </Typography>
-                </MenuItem>
-              )}
-            </Menu>
-          </Box>
-
-          <Link href="/" style={{ display: 'inline-flex' }}>
-            <Box
-              sx={{
-                display: { xs: 'flex', md: 'none' },
-                position: 'relative',
-                width: 65,
-                height: 65,
-                m: 1,
-                cursor: 'pointer',
-              }}
-            >
-              <Box
-                sx={{
-                  position: 'absolute',
-                  inset: 0,
-                  bgcolor: 'white',
-                  borderRadius: 4,
-                }}
-              />
-              <Box
-                component="img"
-                src="/logo.png"
-                alt="Logo"
-                sx={{
-                  position: 'relative',
-                  width: 65,
-                  height: 65,
-                }}
-              />
-            </Box>
-          </Link>
-
-          <Box
-            sx={{
-              display: { xs: 'flex', md: 'none' },
-              alignItems: 'center',
-              gap: 1,
-              mr: 2,
-            }}
-          >
-            <LanguageButton languageToggle={'ru'} languageName={'RU'} />
-            <LanguageButton languageToggle={'en'} languageName={'EN'} />
-          </Box>
-
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'none', md: 'flex' },
-              gap: 3,
-              justifyContent: 'flex-end',
-            }}
-          >
-            {!user ? (
-              pages.map(({ label, path }) => (
-                <Link
-                  key={label}
-                  href={path}
-                  style={{ textDecoration: 'none' }}
+                <Button
+                  onClick={handleSignOut}
+                  sx={{
+                    ml: 'auto',
+                    mr: 2,
+                    color: 'white',
+                    display: 'block',
+                    textTransform: 'none',
+                  }}
                 >
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{
-                      my: 2,
-                      color: 'white',
-                      display: 'block',
-                      textTransform: 'none',
-                    }}
-                  >
-                    {label}
-                  </Button>
-                </Link>
-              ))
-            ) : (
-              <Button
-                onClick={handleSignOut}
-                sx={{
-                  ml: 'auto',
-                  mr: 2,
-                  color: 'white',
-                  display: 'block',
-                  textTransform: 'none',
-                }}
-              >
-                {t('signOut')}
-              </Button>
-            )}
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+                  {t('signOut')}
+                </Button>
+              )}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Toolbar />
+    </>
   );
 }
 

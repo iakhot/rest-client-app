@@ -1,46 +1,50 @@
 'use client';
-import React from 'react';
-import { Tab, Box, Tabs } from '@mui/material';
+import { SyntheticEvent, useState } from 'react';
+import { Tab, Tabs, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/config';
+import { usePathname } from '@/i18n/navigation';
+import sidebarInitTab from '@/service/sidebarInitTab';
 
 function NavMenuAuth() {
   const [user] = useAuthState(auth);
-  const [value, setValue] = React.useState(0);
+  const theme = useTheme();
+  const pathname = usePathname().slice(1).toLowerCase();
+  const [value, setValue] = useState(sidebarInitTab(pathname));
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+
+  const handleChange = (_event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   const t = useTranslations('Home');
 
   return (
-    <Box
+    <Tabs
+      component="nav"
+      orientation={isSmUp ? 'vertical' : 'horizontal'}
+      variant="scrollable"
+      value={value}
+      onChange={handleChange}
+      aria-label="Content tabs"
       sx={{
-        width: 180,
+        flexBasis: 200,
+        flexShrink: 0,
         borderRight: 1,
         borderColor: 'divider',
-        // height: '60vh',
       }}
     >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ height: '100%' }}
-      >
-        <Tab component={Link} href="/client" label={t('restClient')} />
-        <Tab
-          component={Link}
-          href={`/history?user=${user?.uid}`}
-          label={t('history')}
-        />
-        <Tab component={Link} href="/variables" label={t('variables')} />
-      </Tabs>
-    </Box>
+      <Tab component={Link} href="/main" label={t('main')} />
+      <Tab component={Link} href="/client" label={t('restClient')} />
+      <Tab
+        component={Link}
+        href={`/history?user=${user?.uid}`}
+        label={t('history')}
+      />
+      <Tab component={Link} href="/variables" label={t('variables')} />
+    </Tabs>
   );
 }
 

@@ -23,7 +23,7 @@ const History = async ({ searchParams }: HistoryProps) => {
   const history = await getHistory(userId);
 
   return (
-    <Stack paddingRight={4} maxHeight={'100%'} sx={{ overflowY: 'auto' }}>
+    <Stack paddingX={4} height="100%" overflow={'auto'}>
       <Typography component={'h3'} marginBottom={2}>
         {t('title')}
       </Typography>

@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import NavBar from '@/components/main-page/NavBar';
 import FooterElement from '@/components/main-page/FooterElement';
-import { Box, Container } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import MessageProvider from '@/components/common/MessageContextProvider';
 
 export const metadata: Metadata = {
@@ -34,22 +34,19 @@ export default async function RootLayout({
           <NextIntlClientProvider>
             <MessageProvider>
               <Container
+                disableGutters
                 sx={{
-                  paddingTop: 5,
                   display: 'flex',
                   flexDirection: 'column',
-                  minHeight: '100vh',
+                  height: '100vh',
                 }}
-                maxWidth={false}
-                disableGutters={true}
               >
                 <NavBar />
-                <Box
+                <Stack
                   component="main"
+                  flexGrow={1}
+                  overflow="hidden"
                   sx={{
-                    flexGrow: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
                     '&::before': {
                       content: '""',
                       display: 'block',
@@ -62,7 +59,7 @@ export default async function RootLayout({
                   }}
                 >
                   {children}
-                </Box>
+                </Stack>
                 <FooterElement />
               </Container>
             </MessageProvider>
