@@ -47,5 +47,14 @@
     "history": "History",
     "variables": "Variables",
     "signOut": "Sign Out"
+  },
+  "History": {
+    "title": "Query history",
+    "emptyHistory": "No history available",
+    "status": "Status Code:",
+    "duration": "Duration: ",
+    "requestSize": "Request Size: ",
+    "responseSize": "Response Size: ",
+    "errorDetails": "Error Details: "
   }
 }

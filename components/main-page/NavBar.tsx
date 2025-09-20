@@ -87,17 +87,34 @@ function NavBar() {
         <Toolbar disableGutters>
           <Link href="/" style={{ display: 'inline-flex' }}>
             <Box
-              component="img"
-              src="/logo.png"
-              alt="Logo"
               sx={{
                 display: { xs: 'none', md: 'flex' },
-                mr: 1,
-                width: 85,
-                height: 85,
+                position: 'relative',
+                width: 65,
+                height: 65,
+                m: 1,
                 cursor: 'pointer',
               }}
-            />
+            >
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  bgcolor: 'white',
+                  borderRadius: 4,
+                }}
+              />
+              <Box
+                component="img"
+                src="/logo.png"
+                alt="Logo"
+                sx={{
+                  position: 'relative',
+                  width: 65,
+                  height: 65,
+                }}
+              />
+            </Box>
           </Link>
 
           <Box
@@ -165,17 +182,34 @@ function NavBar() {
 
           <Link href="/" style={{ display: 'inline-flex' }}>
             <Box
-              component="img"
-              src="/logo.png"
-              alt="Logo"
               sx={{
                 display: { xs: 'flex', md: 'none' },
-                mr: 2,
-                width: 70,
-                height: 70,
+                position: 'relative',
+                width: 65,
+                height: 65,
+                m: 1,
                 cursor: 'pointer',
               }}
-            />
+            >
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  bgcolor: 'white',
+                  borderRadius: 4,
+                }}
+              />
+              <Box
+                component="img"
+                src="/logo.png"
+                alt="Logo"
+                sx={{
+                  position: 'relative',
+                  width: 65,
+                  height: 65,
+                }}
+              />
+            </Box>
           </Link>
 
           <Box
@@ -191,7 +225,12 @@ function NavBar() {
           </Box>
 
           <Box
-            sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 3 }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              gap: 3,
+              justifyContent: 'flex-end',
+            }}
           >
             {!user ? (
               pages.map(({ label, path }) => (
@@ -217,7 +256,8 @@ function NavBar() {
               <Button
                 onClick={handleSignOut}
                 sx={{
-                  my: 2,
+                  ml: 'auto',
+                  mr: 2,
                   color: 'white',
                   display: 'block',
                   textTransform: 'none',

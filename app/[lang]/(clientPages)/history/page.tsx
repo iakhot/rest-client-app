@@ -1,37 +1,46 @@
-'use client';
+import { Accordion, Stack, Typography } from '@mui/material';
+import Summary from '@/components/history-accordion/summary';
+import { getTranslations } from 'next-intl/server';
+import { getHistory } from '@/app/dbActions';
+import { lazy } from 'react';
+import { redirect } from 'next/navigation';
 
-import { auth, database } from '@/firebase/config';
-import { useSignOut } from 'react-firebase-hooks/auth';
-import { ref, child, get } from 'firebase/database';
+const DetailsLazy = lazy(
+  () => import('@/components/history-accordion/details')
+);
 
-function History() {
-  const [signOut] = useSignOut(auth);
+type HistoryProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
-  const dbRef = ref(database);
-  get(child(dbRef, `history`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        console.log(snapshot.val());
-      } else {
-        console.log('No data available');
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+const History = async ({ searchParams }: HistoryProps) => {
+  const t = await getTranslations('History');
+  const params = await searchParams;
+  const userId = params.user as string | undefined;
+  if (!userId) {
+    redirect('/');
+  }
+  const history = await getHistory(userId);
 
   return (
-    <>
-      <div>This is History page</div>;
-      <button
-        onClick={() => {
-          signOut();
-        }}
-      >
-        Sign out
-      </button>
-    </>
+    <Stack paddingRight={4} maxHeight={'100%'} sx={{ overflowY: 'auto' }}>
+      <Typography component={'h3'} marginBottom={2}>
+        {t('title')}
+      </Typography>
+      {history.length === 0 ? (
+        <Typography color="text.secondary">No history available</Typography>
+      ) : (
+        history.map((historyItem, index) => {
+          return (
+            <Accordion key={historyItem.uuid}>
+              <Summary historyItem={historyItem} index={index} />
+              <DetailsLazy historyItem={historyItem} />
+            </Accordion>
+          );
+        })
+      )}
+    </Stack>
   );
-}
+};
 
 export default History;

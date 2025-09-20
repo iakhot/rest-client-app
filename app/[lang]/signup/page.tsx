@@ -32,7 +32,7 @@ export default function SignUp() {
   const router = useRouter();
   const t = useTranslations('Sign');
 
-  if (user) redirect('/');
+  if (user) redirect('/main');
 
   const formData = {
     ...initialFormState,

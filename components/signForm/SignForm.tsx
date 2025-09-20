@@ -1,6 +1,6 @@
 import { Card, SignContainer } from '@/style/styledSign';
 import { useTranslations } from 'next-intl';
-import { FC, FormEventHandler, Dispatch, SetStateAction } from 'react';
+import { FormEventHandler, Dispatch, SetStateAction } from 'react';
 import GetLink from '@/components/common/GetLink';
 import {
   Box,
@@ -26,14 +26,14 @@ type SignFormProps = {
     | undefined;
 };
 
-const SignForm: FC<SignFormProps> = ({
+const SignForm = ({
   formType,
   required = false,
   userFormData,
   setFormData,
   handleSubmit,
   errors,
-}) => {
+}: SignFormProps) => {
   const t = useTranslations('Sign');
 
   return (

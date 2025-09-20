@@ -47,5 +47,14 @@
     "history": "История",
     "variables": "Переменные",
     "signOut": "Выход"
+  },
+  "History": {
+    "title": "История запросов",
+    "emptyHistory": "Нет истории запросов",
+    "status": "Статус код:",
+    "duration": "Продолжительность: ",
+    "requestSize": "Размер запроса: ",
+    "responseSize": "Размер ответа: ",
+    "errorDetails": "Детали ошибок: "
   }
 }

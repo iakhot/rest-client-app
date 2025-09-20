@@ -1,6 +1,7 @@
 import { HttpMethods } from './restClient';
 
 export interface RequestHistory {
+  uuid: string;
   userId: string;
   endpoint: string;
   requestDuration?: string;

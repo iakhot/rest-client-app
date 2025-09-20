@@ -32,17 +32,21 @@ export async function getHistory(userId: string) {
     orderByChild('userId'),
     equalTo(userId)
   );
-  get(q)
+  return get(q)
     .then((snapshot) => {
       const data: RequestHistory[] = [];
       if (snapshot.exists()) {
         snapshot.forEach((childSnapshot) => {
-          data.push(childSnapshot.val() as RequestHistory);
+          data.push({
+            ...childSnapshot.val(),
+            uuid: childSnapshot.key,
+          } as RequestHistory);
         });
+        data.sort((a, b) => b.requestTimestamp - a.requestTimestamp);
       }
-      return { data };
+      return data;
     })
     .catch((error) => {
-      return wrapServerError(error);
+      throw wrapServerError(error);
     });
 }
