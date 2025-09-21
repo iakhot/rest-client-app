@@ -1,3 +1,4 @@
+import { RequestHistory } from '@/types/history';
 import {
   AppRouterContext,
   AppRouterInstance,
@@ -28,4 +29,19 @@ export const RouterContextMock = ({
       {children}
     </AppRouterContext.Provider>
   );
+};
+
+export const mockHistory: RequestHistory = {
+  uuid: '1',
+  userId: '123',
+  endpoint: '/api/test',
+  requestMethod: 'GET',
+  requestHeaders: '{}',
+  requestBody: '',
+  requestSize: '100',
+  requestTimestamp: 1758465276478,
+  responseSize: '100',
+  responseStatus: 200,
+  errorDetails: 'Ok',
+  requestDuration: '100',
 };
