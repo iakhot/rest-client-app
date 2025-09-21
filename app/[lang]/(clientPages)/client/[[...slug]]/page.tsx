@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { lazy, Suspense, useContext, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import ResponseView from '@/components/rest-client/ResponseView';
 
 const RequestEditor = lazy(
   () => import('@/components/rest-client/RequestEditor')
@@ -43,7 +44,13 @@ function RestClient() {
       </Suspense>
 
       <br />
-      <p>{(textResponse as RestResponse).body}</p>
+
+      {!(textResponse instanceof Error) ? (
+        <ResponseView
+          statusResp={textResponse.status}
+          body={textResponse.body}
+        />
+      ) : null}
     </Box>
   );
 }

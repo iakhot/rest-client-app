@@ -46,7 +46,15 @@
     "restClient": "REST Client",
     "history": "History",
     "variables": "Variables",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "main": "Main"
+  },
+  "Response": {
+    "resp": "Response",
+    "status": "status",
+    "button": "Format JSON",
+    "bodyComponent": "Body Component",
+    "noResponse": "No response data available."
   },
   "History": {
     "title": "Query history",

@@ -1,10 +1,11 @@
-import { Tab, Tabs, TextField } from '@mui/material';
+import { Tab, Tabs } from '@mui/material';
 import TabPanel from '../common/TabPanel';
 import { memo, SyntheticEvent, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { a11yTabProps } from '@/service/tabsUtils';
 import { useClientStore } from '@/store/clientStore';
 import KeyValueEditor from './KeyValueEditor';
+import ResponseView from './ResponseView';
 
 interface RequestSettingsProps {
   initialBody?: string;
@@ -48,15 +49,11 @@ const RequestSettings = memo(function RequestSettings({
         <KeyValueEditor />
       </TabPanel>
       <TabPanel value={currentTab} index={1} sx={TabPanelSx}>
-        <p>Body Component</p>
-        <TextField
-          id="body"
-          value={body ?? ''}
-          onChange={(e) => setBody(e.target.value)}
-          onBlur={() => {
-            onBodyChange(body ?? '');
-          }}
-        ></TextField>
+        <ResponseView
+          body={body}
+          bodyChange={onBodyChange}
+          setBodyReq={setBody}
+        />
       </TabPanel>
       <TabPanel value={currentTab} index={2} sx={TabPanelSx}>
         <p>Code Component</p>

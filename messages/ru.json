@@ -46,7 +46,15 @@
     "restClient": "REST-клиент",
     "history": "История",
     "variables": "Переменные",
-    "signOut": "Выход"
+    "signOut": "Выход",
+    "main": "Домашняя"
+  },
+  "Response": {
+    "resp": "Ответ",
+    "status": "статус",
+    "button": "Форматировать JSON",
+    "bodyComponent": "Компонент body",
+    "noResponse": "Нет данных для отображения ответа"
   },
   "History": {
     "title": "История запросов",
