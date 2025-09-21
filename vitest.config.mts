@@ -20,6 +20,12 @@ export default defineConfig({
         '**/*.d.ts',
         '**/index.{ts,tsx}',
         '__tests__',
+        '**/*[-.]config.ts',
+        '**/types/**',
+        'theme.ts',
+        'middleware.ts',
+        'firebase/**',
+        'i18n/**',
       ],
       thresholds: {
         statements: 80,

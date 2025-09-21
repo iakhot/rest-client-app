@@ -106,6 +106,7 @@ function RequestEditor({
           </UrlInput>
           <UrlInput
             id="url"
+            aria-label="url"
             variant="outlined"
             placeholder={t('urlPlaceholder')}
             value={request.url}
