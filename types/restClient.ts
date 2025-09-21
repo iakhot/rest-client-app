@@ -4,6 +4,8 @@ export const httpMethodsValues = [
   'PUT',
   'PATCH',
   'DELETE',
+  'HEAD',
+  'OPTIONS',
 ] as const;
 export type HttpMethods = (typeof httpMethodsValues)[number];
 

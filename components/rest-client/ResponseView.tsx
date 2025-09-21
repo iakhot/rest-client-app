@@ -52,7 +52,7 @@ function ResponseView({
     <Stack
       alignItems="flex-start"
       sx={{
-        marginRight: { xs: '5%', sm: '10%', md: '18%' },
+        marginRight: { xs: '3%', sm: '5%', md: '10%' },
         marginLeft: { xs: '5%', md: '3%' },
       }}
     >

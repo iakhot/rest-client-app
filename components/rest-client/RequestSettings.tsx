@@ -43,7 +43,6 @@ const RequestSettings = memo(function RequestSettings({
       >
         <Tab label={t('headers')} {...a11yTabProps(0)}></Tab>
         <Tab label={t('body')} {...a11yTabProps(1)}></Tab>
-        <Tab label={t('codeSnippets')} {...a11yTabProps(2)}></Tab>
       </Tabs>
       <TabPanel value={currentTab} index={0} sx={TabPanelSx}>
         <KeyValueEditor />
@@ -54,9 +53,6 @@ const RequestSettings = memo(function RequestSettings({
           bodyChange={onBodyChange}
           setBodyReq={setBody}
         />
-      </TabPanel>
-      <TabPanel value={currentTab} index={2} sx={TabPanelSx}>
-        <p>Code Component</p>
       </TabPanel>
     </>
   );

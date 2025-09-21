@@ -13,7 +13,6 @@
   "RequestEditor": {
     "send": "Выполнить",
     "urlPlaceholder": "Введите URL",
-    "codeSnippets": "Фрагмент кода",
     "headers": "HTTP Заголовки",
     "body": "Тело запроса",
     "sendSuccess": "Запрос выполнен успешно",
@@ -45,7 +44,6 @@
     "welcomeBack": "С возвращением, ",
     "restClient": "REST-клиент",
     "history": "История",
-    "variables": "Переменные",
     "signOut": "Выход",
     "main": "Домашняя"
   },

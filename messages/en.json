@@ -13,7 +13,6 @@
   "RequestEditor": {
     "send": "Send",
     "urlPlaceholder": "Enter URL",
-    "codeSnippets": "Code snippets",
     "headers": "HTTP Headers",
     "body": "Body",
     "sendSuccess": "Request completed successfully",
@@ -45,7 +44,6 @@
     "welcomeBack": "Welcome Back, ",
     "restClient": "REST Client",
     "history": "History",
-    "variables": "Variables",
     "signOut": "Sign Out",
     "main": "Main"
   },

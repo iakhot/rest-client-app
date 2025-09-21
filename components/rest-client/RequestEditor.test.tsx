@@ -109,7 +109,7 @@ describe('RequestEditor', () => {
     await user.click(methodSelect);
     await waitFor(async () => {
       const options = screen.getAllByRole('option');
-      expect(options).toHaveLength(5);
+      expect(options).toHaveLength(7);
       option = options[2];
       expect(option).toHaveTextContent(/put/i);
     });

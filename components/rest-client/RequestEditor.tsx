@@ -35,8 +35,12 @@ function RequestEditor({
 
   if (slug) {
     initRequest.method = slug[0].toUpperCase() as HttpMethods;
-    initRequest.url = slug[1] ? atob(decodeURIComponent(slug[1])) : '';
-    initRequest.body = slug[2] ? atob(decodeURIComponent(slug[2])) : undefined;
+    initRequest.url = slug[1]
+      ? Buffer.from(slug[1], 'base64').toString('utf-8')
+      : '';
+    initRequest.body = slug[2]
+      ? Buffer.from(slug[2], 'base64').toString('utf-8')
+      : undefined;
     initRequest.headers = headersFromSearchParams(query);
   }
 
@@ -72,21 +76,25 @@ function RequestEditor({
   const handleSend = () => {
     const payload: RestRequest = {
       ...request,
-      body: request.body ? btoa(request.body) : undefined,
+      body: request.body
+        ? Buffer.from(request.body, 'utf-8').toString('base64')
+        : undefined,
     };
-    onSend(payload);
     router.replace(composeUrl(request));
+    onSend(payload);
   };
 
   return (
     <Box
       sx={{
+        width: '100%',
         display: 'flex',
         flexDirection: 'column',
         gap: 2,
         maxWidth: { md: 800 },
         borderBottom: 1,
         borderColor: 'divider',
+        paddingTop: 4,
       }}
     >
       <Toolbar>

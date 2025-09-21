@@ -5,8 +5,12 @@ const CLIENT_PAGE = '/client';
 
 export const composeUrl = (req: RestRequest) => {
   const initPath = CLIENT_PAGE + '/';
-  const encodedUrl = req.url ? btoa(req.url) : undefined;
-  const encodedBody = req.body ? btoa(req.body) : undefined;
+  const encodedUrl = req.url
+    ? Buffer.from(req.url, 'utf-8').toString('base64')
+    : undefined;
+  const encodedBody = req.body
+    ? Buffer.from(req.body, 'utf-8').toString('base64')
+    : undefined;
   const headers = req.headers ? headersToString(req.headers) : undefined;
   const vars = [req.method, encodedUrl, encodedBody, headers];
 

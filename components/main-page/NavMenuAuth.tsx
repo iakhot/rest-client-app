@@ -1,5 +1,5 @@
 'use client';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useLayoutEffect, useState } from 'react';
 import { Tab, Tabs, useMediaQuery, useTheme } from '@mui/material';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
@@ -12,7 +12,8 @@ function NavMenuAuth() {
   const [user] = useAuthState(auth);
   const theme = useTheme();
   const pathname = usePathname().slice(1).toLowerCase();
-  const [value, setValue] = useState(sidebarInitTab(pathname));
+  const currentTab = sidebarInitTab(pathname);
+  const [value, setValue] = useState(currentTab);
 
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -20,6 +21,10 @@ function NavMenuAuth() {
     setValue(newValue);
   };
   const t = useTranslations('Home');
+
+  useLayoutEffect(() => {
+    setValue(currentTab);
+  }, [currentTab]);
 
   return (
     <Tabs
@@ -43,7 +48,6 @@ function NavMenuAuth() {
         href={`/history?user=${user?.uid}`}
         label={t('history')}
       />
-      <Tab component={Link} href="/variables" label={t('variables')} />
     </Tabs>
   );
 }

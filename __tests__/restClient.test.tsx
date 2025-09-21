@@ -43,7 +43,7 @@ const uuid = crypto.randomUUID();
 const userStub = {
   uid: uuid,
 };
-const clientTabs = ['http headers', 'body', 'code snippets'] as const;
+const clientTabs = ['http headers', 'body'] as const;
 
 describe('RestClient page', () => {
   it('renders component loader', () => {
@@ -64,7 +64,7 @@ describe('RestClient page', () => {
       expect(screen.getByPlaceholderText(/enter URL/i)).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /send/i })).toBeInTheDocument();
       const tabs = screen.getAllByRole('tab');
-      expect(tabs).toHaveLength(3);
+      expect(tabs).toHaveLength(2);
       for (const label of clientTabs) {
         expect(screen.getByText(new RegExp(label, 'i'))).toBeInTheDocument();
       }
