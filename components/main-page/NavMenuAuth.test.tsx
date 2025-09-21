@@ -22,12 +22,6 @@ type MockTabProps = React.HTMLAttributes<HTMLDivElement> & {
   component?: React.ComponentType<unknown>;
 };
 
-type LinkProps = {
-  children?: React.ReactNode;
-  href: string;
-  [key: string]: unknown;
-};
-
 vi.mock('react-firebase-hooks/auth', () => ({
   useAuthState: vi.fn(),
 }));
@@ -52,11 +46,7 @@ vi.mock('@mui/material', () => ({
 }));
 
 vi.mock('@/i18n/navigation', () => ({
-  Link: ({ children, href, ...props }: LinkProps) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  ),
+  Link: vi.fn(),
   usePathname: vi.fn(),
 }));
 

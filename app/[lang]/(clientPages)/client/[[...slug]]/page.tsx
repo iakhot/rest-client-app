@@ -1,5 +1,5 @@
 'use client';
-import sendRequest from '@/app/actions';
+import { sendRequest } from '@/app/actions';
 import { MessageContext } from '@/components/common/MessageContextProvider';
 import { auth } from '@/firebase/config';
 import { RestRequest, RestResponse } from '@/types/restClient';

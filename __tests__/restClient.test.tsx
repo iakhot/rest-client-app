@@ -8,7 +8,7 @@ import {
   useParams,
   useSearchParams,
 } from 'next/navigation';
-import sendRequest from '@/app/actions';
+import { sendRequest } from '@/app/actions';
 import { RestResponse } from '@/types/restClient';
 
 vi.mock('@/firebase/config', () => ({
@@ -21,7 +21,6 @@ vi.mock('@/firebase/config', () => ({
 
 vi.mock('react-firebase-hooks/auth', () => ({
   useAuthState: vi.fn(),
-  useSignInWithEmailAndPassword: vi.fn(),
 }));
 
 vi.mock('next/navigation', () => ({
@@ -35,8 +34,7 @@ vi.mock('next/navigation', () => ({
 }));
 
 vi.mock('@/app/actions', () => ({
-  __esModule: true,
-  default: vi.fn(),
+  sendRequest: vi.fn(),
 }));
 
 const uuid = crypto.randomUUID();
@@ -70,14 +68,14 @@ describe('RestClient page', () => {
       }
     });
   });
-  it('handles Send click', async () => {
+  it('handles successful request', async () => {
     const respStub: RestResponse = {
       body: '{"text": "Hello World"}',
       status: 200,
       statusText: 'OK',
     };
 
-    (sendRequest as Mock).mockReturnValue(() => Promise.resolve(respStub));
+    vi.mocked(sendRequest).mockResolvedValue(respStub);
     (useAuthState as Mock).mockReturnValue([userStub]);
     vi.mocked(useParams).mockReturnValue({ slug: '' });
     vi.mocked(useSearchParams).mockImplementation(
@@ -90,5 +88,38 @@ describe('RestClient page', () => {
 
     const alert = await screen.findByRole('alert', {}, { timeout: 3000 });
     expect(alert).toHaveTextContent(/Request completed successfully/i);
+    await waitFor(() => {
+      expect(screen.getByText(/response/i)).toBeInTheDocument();
+      expect(screen.getByText(/status: 200/i)).toBeInTheDocument();
+      expect(
+        screen.getByDisplayValue(/"text": "Hello World"/i)
+      ).toBeInTheDocument();
+    });
+  });
+  it('handles failed request', async () => {
+    const errorStub = {
+      error: {
+        name: 'Type error',
+        message: 'Failed to fetch',
+      },
+    };
+
+    vi.mocked(sendRequest).mockResolvedValue(errorStub);
+    (useAuthState as Mock).mockReturnValue([userStub]);
+    vi.mocked(useParams).mockReturnValue({ slug: '' });
+    vi.mocked(useSearchParams).mockImplementation(
+      () => new URLSearchParams('') as ReadonlyURLSearchParams
+    );
+
+    const { user } = renderWithProviders(<RestClient />);
+    const send = screen.getByRole('button', { name: /send/i });
+    await user.click(send);
+
+    const alert = await screen.findByRole('alert', {}, { timeout: 3000 });
+    expect(alert).toHaveTextContent(/Error sending request:/i);
+    await waitFor(() => {
+      expect(screen.queryByText(/response/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/status: 200/i)).not.toBeInTheDocument();
+    });
   });
 });

@@ -1,4 +1,5 @@
 import { RequestHistory } from '@/types/history';
+import { KeyValuePair } from '@/types/restClient';
 import {
   AppRouterContext,
   AppRouterInstance,
@@ -45,3 +46,14 @@ export const mockHistory: RequestHistory = {
   errorDetails: 'Ok',
   requestDuration: '100',
 };
+
+export const mockHeaders: KeyValuePair[] = [
+  {
+    key: 'Accept',
+    value: 'text/html',
+  },
+  {
+    key: 'Content-Type',
+    value: 'image/png',
+  },
+];

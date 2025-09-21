@@ -10,10 +10,7 @@ const getSummarySize = (body?: string, headers?: Headers) => {
   return (bodySize + headersSize).toFixed(2);
 };
 
-export default async function sendRequest(
-  request: RestRequest,
-  userId?: string
-) {
+export async function sendRequest(request: RestRequest, userId?: string) {
   try {
     const { url, method, headers, body } = request;
     const timestamp = Date.now();
