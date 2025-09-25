@@ -1,4 +1,4 @@
-This is a final team's task for RSS Rect course. Task: [link](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
+This is a final team's task for RSS React course. Task: [link](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
 ## Deploy
 https://rest-client-app-khaki.vercel.app/
 
